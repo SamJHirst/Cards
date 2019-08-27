@@ -1,0 +1,30 @@
+{
+  "name": "cards",
+  "author": {
+    "name": "Sam Hirst",
+    "email": "Sam@hirst.xyz",
+    "url": "https://hirst.xyz"
+  },
+  "bugs": "https://github.com/Naeviant/Cards/issues",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Naeviant/Cards.git"
+  },
+  "description": "A higher and lower cards game which gives you all the statistics you need to make an informed decision.",
+  "main": "app.js",
+  "private": true,
+  "scripts": {},
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "express": "^4.16.4",
+    "express-nunjucks": "^2.2.3",
+    "express-session": "^1.16.1",
+    "nunjucks": "^3.2.0",
+    "shuffle-array": "^1.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.11"
+  }
+}
