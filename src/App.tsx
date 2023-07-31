@@ -46,6 +46,7 @@ function App() {
 
     const cardsToDisplay = Math.floor(window.innerWidth / 236) - 1;
 
+    // @ts-ignore
     const colourChange = (e: React.FormEvent<HTMLInputElement>, value: string) => {
         setColour(value);
     }
@@ -75,6 +76,7 @@ function App() {
         setSameChance(cards.filter(x => !x.visible && x.value === latestCard.value).length);
     }
 
+    // @ts-ignore
     const newGame = (e: React.FormEvent<HTMLButtonElement>) => {
         setCards([]);
         setScore(0);
