@@ -29,7 +29,7 @@ function CardImage(props: CardImageProps) {
     return (
         card.visible 
         ? <img src={card.path} alt={`${card.run} of ${card.suit}`} className={classes.card} key={index} />
-        : <img src={`/img/backs/${colour}.png`} alt="Back of card" className={classes.card} key={index} />
+        : <img src={`/img/backs/${colour}.svg`} alt="Back of card" className={classes.card} key={index} />
     )
 }
 

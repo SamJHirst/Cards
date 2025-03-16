@@ -91,7 +91,7 @@ function App() {
                     suit,
                     run,
                     value,
-                    path: `/img/${suit}/${run}.png`,
+                    path: `/img/${suit}/${run}.svg`,
                     visible: false
                 });
             }

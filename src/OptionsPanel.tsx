@@ -42,7 +42,7 @@ function OptionsPanel(props: OptionsPanelProps) {
                         <ColourRadio colour="Blue" />
                         <ColourRadio colour="Green" />
                         <ColourRadio colour="Purple" />
-                        <ColourRadio colour="Grey" />
+                        <ColourRadio colour="Black" />
                     </Grid>
                 </RadioGroup>
             </FormControl>
