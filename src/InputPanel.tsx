@@ -28,8 +28,15 @@ function InputPanel(props: InputPanelProps) {
     return (
         <>
             <Typography variant="h4" align="center" className={classes.panelHeader}>Inputs</Typography>
-            <Button variant="contained" onClick={() => makeGuess("higher")} disabled={gameOver} className={classes.inputButton}>Higher</Button>
-            <Button variant="contained" onClick={() => makeGuess("lower")} disabled={gameOver} className={classes.inputButton}>Lower</Button>
+            <div
+                style={{
+                    display: 'flex',
+                    flex: 1,
+                }}
+            >
+                <Button variant="contained" onClick={() => makeGuess("higher")} disabled={gameOver} className={classes.inputButton}>Higher</Button>
+                <Button variant="contained" onClick={() => makeGuess("lower")} disabled={gameOver} className={classes.inputButton}>Lower</Button>
+            </div>
         </>
     )
 }

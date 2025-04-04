@@ -1,7 +1,6 @@
 import { 
     Card, 
-    CardContent,
-    Grid
+    CardContent
 } from '@mui/material';
 
 interface PanelProps {
@@ -12,13 +11,17 @@ function Panel(props: PanelProps) {
     const { children } = props;
 
     return (
-        <Grid item xs={4}>
-            <Card>
-                <CardContent>
-                    {children}
-                </CardContent>
-            </Card>
-        </Grid>
+        <Card style={{
+            height: '100%',
+        }}>
+            <CardContent style={{
+                display: 'flex',
+                flexDirection: 'column',
+                height: 'calc(100% - 40px)',
+            }}>
+                {children}
+            </CardContent>
+        </Card>
     )
 }
 

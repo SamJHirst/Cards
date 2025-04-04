@@ -14,20 +14,22 @@ const useStyles = makeStyles({
         backgroundImage: 'url("/img/background.jpg")',
         width: '100%',
         height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
     },
     game: {
-        height: 'calc(100% - 200px)',
         whiteSpace: 'nowrap',
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
+        flexGrow: 1,
     },
     panels: {
-        position: 'absolute',
-        bottom: '10px',
-        left: '10px',
-        width: 'calc(100% - 20px)',
+        flexGrow: 0,
+        padding: 10,
+        display: 'flex',
+        alignItems: 'stretch',
     },
 });
 
@@ -126,35 +128,41 @@ function App() {
             </div>
             <div className={classes.panels}>
                 <Grid container spacing={2}>
-                    <Panel
-                        children={gameOver
-                            ?
-                            <GameOverPanel
-                                score={score}
-                                newGame={newGame}
-                            />
-                            :
-                            <StatsPanel
-                                score={score}
-                                higherChance={higherChance}
-                                lowerChance={lowerChance}
-                                sameChance={sameChance}
-                                deckSize={deckSize}
-                            />
-                        }
-                    />
-                    <Panel
-                        children={<InputPanel
-                            makeGuess={makeGuess}
-                            gameOver={gameOver}
-                        />}
-                    />
-                    <Panel
-                        children={<OptionsPanel
-                            colour={colour}
-                            colourChange={colourChange}
-                        />}
-                    />
+                    <Grid item md={6} lg={4} sx={{ display: { xs: 'none', md: 'block' } }}>
+                        <Panel
+                            children={gameOver
+                                ?
+                                <GameOverPanel
+                                    score={score}
+                                    newGame={newGame}
+                                />
+                                :
+                                <StatsPanel
+                                    score={score}
+                                    higherChance={higherChance}
+                                    lowerChance={lowerChance}
+                                    sameChance={sameChance}
+                                    deckSize={deckSize}
+                                />
+                            }
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={4}>
+                        <Panel
+                            children={<InputPanel
+                                makeGuess={makeGuess}
+                                gameOver={gameOver}
+                            />}
+                        />
+                    </Grid>
+                    <Grid item lg={4} sx={{ display: { xs: 'none', lg: 'block' } }}>
+                        <Panel
+                            children={<OptionsPanel
+                                colour={colour}
+                                colourChange={colourChange}
+                            />}
+                        />
+                    </Grid>
                 </Grid>
             </div>
         </div>

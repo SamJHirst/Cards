@@ -34,7 +34,12 @@ function StatsPanel(props: StatsPanelProps) {
     return (
         <>
             <Typography variant="h4" align="center" className={classes.panelHeader}>Scores & Stats</Typography>
-            <TableContainer>
+            <TableContainer
+                style={{
+                    display: 'flex',
+                    flex: 1,
+                }}
+            >
                 <Table>
                     <TableBody>
                     <TableRow>

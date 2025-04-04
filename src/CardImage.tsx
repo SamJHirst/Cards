@@ -2,7 +2,6 @@ import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
     card: {
-        height: 'calc(100% - 400px)',
         margin: 10,
     },
 });

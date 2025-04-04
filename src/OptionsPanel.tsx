@@ -14,6 +14,8 @@ const useStyles = makeStyles({
         marginBottom: '8px !important',
     },
     optionsWrapper: {
+      flex: 1,
+      justifyContent: 'center',
       width: '100%',
     },
     radioWrapper: {
