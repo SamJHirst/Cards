@@ -1,41 +1,54 @@
 import { 
     Button,
-    Typography
+    Typography,
 } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-
-const useStyles = makeStyles({
-    panelHeader: {
-        marginTop: '8px !important',
-        marginBottom: '8px !important',
-    },
-    inputButton: {
-      width: '100%',
-      margin: '5px !important',
-    },
-});
 
 interface InputPanelProps {
-    makeGuess: (guess: string) => void;
     gameOver: boolean;
+    makeGuess: (guess: 'HIGHER' | 'LOWER') => void;
 }
 
-function InputPanel(props: InputPanelProps) {
-    const { makeGuess, gameOver } = props;
-    
-    const classes = useStyles();
-
+function InputPanel({ gameOver, makeGuess }: InputPanelProps) {
     return (
         <>
-            <Typography variant="h4" align="center" className={classes.panelHeader}>Inputs</Typography>
+            <Typography
+                align="center"
+                style={{
+                    marginBottom: '8px !important',
+                    marginTop: '8px !important',
+                }}
+                variant="h4"
+            >
+                Inputs
+            </Typography>
             <div
                 style={{
                     display: 'flex',
                     flex: 1,
                 }}
             >
-                <Button variant="contained" onClick={() => makeGuess("higher")} disabled={gameOver} className={classes.inputButton}>Higher</Button>
-                <Button variant="contained" onClick={() => makeGuess("lower")} disabled={gameOver} className={classes.inputButton}>Lower</Button>
+                <Button
+                    disabled={gameOver}
+                    onClick={() => makeGuess('HIGHER')}
+                    style={{
+                        margin: '5px !important',
+                        width: '100%',
+                    }}
+                    variant="contained"
+                >
+                    Higher
+                </Button>
+                <Button
+                    disabled={gameOver}
+                    onClick={() => makeGuess('LOWER')}
+                    style={{
+                        margin: '5px !important',
+                        width: '100%',
+                    }}
+                    variant="contained"
+                >
+                    Lower
+                </Button>
             </div>
         </>
     )

@@ -1,36 +1,43 @@
 import { 
     Button,
-    Typography
+    Typography,
 } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-
-const useStyles = makeStyles({
-    panelHeader: {
-        marginTop: '8px !important',
-        marginBottom: '8px !important',
-    },
-    inputButton: {
-      width: '100%',
-      margin: '5px !important',
-    },
-});
 
 interface GameOverPanelProps {
-    score: number;
     newGame: (e: any) => void;
+    score: number;
 }
 
-function GameOverPanel(props: GameOverPanelProps) {
-    const { score, newGame } = props;
-    
-    const classes = useStyles();
-
+function GameOverPanel({ newGame, score }: GameOverPanelProps) {
     return (
         <>
-            <Typography variant="h4" align="center" className={classes.panelHeader}>{ score === 51 ? "You Win!" : "Game Over" }</Typography>
-            <Typography variant="body1" align="center">Score: {score}</Typography>
+            <Typography
+                align="center"
+                style={{
+                    marginBottom: '8px !important',
+                    marginTop: '8px !important',
+                }}
+                variant="h4"
+            >
+                { score === 51 ? "You Win!" : "Game Over" }
+            </Typography>
+            <Typography
+                align="center"
+                variant="body1"
+            >
+                Score: {score}
+            </Typography>
             <br />
-            <Button variant="contained" onClick={newGame} className={classes.inputButton}>New Game</Button>
+            <Button
+                onClick={newGame}
+                style={{
+                    margin: '5px !important',
+                    width: '100%',
+                }}
+                variant="contained"
+            >
+                New Game
+            </Button>
         </>
     )
 }

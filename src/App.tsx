@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Grid } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 
 import CardImage, { PlayingCard } from './CardImage';
 import GameOverPanel from './GameOverPanel';
@@ -8,30 +7,6 @@ import InputPanel from './InputPanel';
 import OptionsPanel from './OptionsPanel';
 import Panel from './Panel';
 import StatsPanel from './StatsPanel';
-
-const useStyles = makeStyles({
-    root: {
-        backgroundImage: 'url("/img/background.jpg")',
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-    },
-    game: {
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        flexGrow: 1,
-    },
-    panels: {
-        flexGrow: 0,
-        padding: 10,
-        display: 'flex',
-        alignItems: 'stretch',
-    },
-});
 
 const suits = ['clubs', 'diamonds', 'hearts', 'spades'];
 const runs = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
@@ -53,7 +28,7 @@ function App() {
         setColour(value);
     }
 
-    const makeGuess = (guess: string) => {
+    const makeGuess = (guess: 'HIGHER' | 'LOWER') => {
         const visibleCards = cards.filter(x => x.visible);
         const latestCard = visibleCards[visibleCards.length - 1];
         const invisibleCards = cards.filter(x => !x.visible);
@@ -61,7 +36,8 @@ function App() {
         const nextCardIndex = cards.findIndex(x => x === nextCard);
         cards[nextCardIndex].visible = true;
         setCards(cards);
-        if ((guess === 'higher' && nextCard.value >= latestCard.value) || (guess === 'lower' && nextCard.value <= latestCard.value)) {
+        
+        if ((guess === 'HIGHER' && nextCard.value >= latestCard.value) || (guess === 'LOWER' && nextCard.value <= latestCard.value)) {
             updateStats(cards);
             setScore(score + 1);
         } else {
@@ -72,14 +48,14 @@ function App() {
     const updateStats = (cards: PlayingCard[]) => {
         const visibleCards = cards.filter(x => x.visible);
         const latestCard = visibleCards[visibleCards.length - 1];
+
         setDeckSize(52 - visibleCards.length);
         setHigherChance(cards.filter(x => !x.visible && x.value > latestCard.value).length);
         setLowerChance(cards.filter(x => !x.visible && x.value < latestCard.value).length);
         setSameChance(cards.filter(x => !x.visible && x.value === latestCard.value).length);
     }
 
-    // @ts-ignore
-    const newGame = (e: React.FormEvent<HTMLButtonElement>) => {
+    const newGame = () => {
         setCards([]);
         setScore(0);
         setGameOver(false);
@@ -111,56 +87,112 @@ function App() {
         setGameOver(true);
     }
 
-    const classes = useStyles();
-
     return (
-        <div className={classes.root}>
-            <div className={classes.game}>
+        <div
+            style={{
+                backgroundImage: 'url("/img/background.jpg")',
+                display: 'flex',
+                flexDirection: 'column',
+                height: '100%',
+                width: '100%',
+            }}
+        >
+            <div
+                style={{
+                    alignItems: 'center',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    flexGrow: 1,
+                    overflow: 'hidden',
+                    whiteSpace: 'nowrap',
+                }}
+            >
                 {
                     cards.filter(x => x.visible).splice(0 - cardsToDisplay, cardsToDisplay).concat(cards.filter(x => !x.visible)).map((card, i) => (
                         <CardImage
                             card={card}
-                            index={i}
                             colour={colour}
+                            key={i}
                         />
                     ))
                 }
             </div>
-            <div className={classes.panels}>
-                <Grid container spacing={2}>
-                    <Grid item md={6} lg={4} sx={{ display: { xs: 'none', md: 'block' } }}>
+            <div
+                style={{
+                    alignItems: 'stretch',
+                    display: 'flex',
+                    flexGrow: 0,
+                    padding: 10,
+                }}
+            >
+                <Grid
+                    container
+                    spacing={2}
+                >
+                    <Grid
+                        item
+                        md={6}
+                        lg={4}
+                        sx={{
+                            display: {
+                                xs: 'none',
+                                md: 'block',
+                            }
+                        }}
+                    >
                         <Panel
-                            children={gameOver
-                                ?
-                                <GameOverPanel
-                                    score={score}
-                                    newGame={newGame}
-                                />
-                                :
-                                <StatsPanel
-                                    score={score}
-                                    higherChance={higherChance}
-                                    lowerChance={lowerChance}
-                                    sameChance={sameChance}
-                                    deckSize={deckSize}
+                            children={
+                                gameOver
+                                    ? (
+                                        <GameOverPanel
+                                            newGame={newGame}
+                                            score={score}
+                                        />
+                                    )
+                                    : (
+                                        <StatsPanel
+                                            deckSize={deckSize}
+                                            higherChance={higherChance}
+                                            lowerChance={lowerChance}
+                                            sameChance={sameChance}
+                                            score={score}
+                                        />
+                                    )
+                            }
+                        />
+                    </Grid>
+                    <Grid
+                        item
+                        xs={12}
+                        md={6}
+                        lg={4}
+                    >
+                        <Panel
+                            children={
+                                <InputPanel
+                                    gameOver={gameOver}
+                                    makeGuess={makeGuess}
                                 />
                             }
                         />
                     </Grid>
-                    <Grid item xs={12} md={6} lg={4}>
+                    <Grid
+                        item
+                        lg={4}
+                        sx={{
+                            display: {
+                                xs: 'none',
+                                lg: 'block',
+                            }
+                        }}
+                    >
                         <Panel
-                            children={<InputPanel
-                                makeGuess={makeGuess}
-                                gameOver={gameOver}
-                            />}
-                        />
-                    </Grid>
-                    <Grid item lg={4} sx={{ display: { xs: 'none', lg: 'block' } }}>
-                        <Panel
-                            children={<OptionsPanel
-                                colour={colour}
-                                colourChange={colourChange}
-                            />}
+                            children={
+                                <OptionsPanel
+                                    colour={colour}
+                                    colourChange={colourChange}
+                                />
+                            }
                         />
                     </Grid>
                 </Grid>
