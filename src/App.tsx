@@ -71,30 +71,28 @@ function App() {
         setScore(0);
         setGameOver(false);
 
-        if (cards.length === 0) {
-            const deck: PlayingCard[] = [];
-            for (const suit of suits) {
-                for (const [value, run] of runs.entries()) {
-                    deck.push({
-                        suit,
-                        run,
-                        value,
-                        path: `/img/${suit}/${run}.svg`,
-                        visible: false
-                    });
+        const deck: PlayingCard[] = [];
+        for (const suit of suits) {
+            for (const [value, run] of runs.entries()) {
+                deck.push({
+                    suit,
+                    run,
+                    value,
+                    path: `/img/${suit}/${run}.svg`,
+                    visible: false
+                });
 
-                    // preload image
-                    new Image().src = `/img/${suit}/${run}.svg`;
-                }
+                // preload image
+                new Image().src = `/img/${suit}/${run}.svg`;
             }
-            const shuffled = deck
-                .map((value) => ({ value, sort: Math.random() }))
-                .sort((a, b) => a.sort - b.sort)
-                .map(({ value }) => value);
-            shuffled[0].visible = true;
-            setCards(shuffled);
-            updateStats(shuffled);
         }
+        const shuffled = deck
+            .map((value) => ({ value, sort: Math.random() }))
+            .sort((a, b) => a.sort - b.sort)
+            .map(({ value }) => value);
+        shuffled[0].visible = true;
+        setCards(shuffled);
+        updateStats(shuffled);
 
         if (containerRef.current) {
             const containerDiv = containerRef.current as HTMLDivElement;
