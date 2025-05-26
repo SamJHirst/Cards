@@ -14,7 +14,7 @@ function InputPanel({ gameOver, makeGuess }: InputPanelProps) {
             <Typography
                 align="center"
                 style={{
-                    marginBottom: '8px !important',
+                    marginBottom: '24px !important',
                     marginTop: '8px !important',
                 }}
                 variant="h4"
@@ -25,6 +25,7 @@ function InputPanel({ gameOver, makeGuess }: InputPanelProps) {
                 style={{
                     display: 'flex',
                     flex: 1,
+                    gap: '8px',
                 }}
             >
                 <Button

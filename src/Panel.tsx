@@ -18,6 +18,7 @@ function Panel({ children }: PanelProps) {
                 style={{
                     display: 'flex',
                     flexDirection: 'column',
+                    gap: '16px',
                     height: 'calc(100% - 40px)',
                 }}
             >
