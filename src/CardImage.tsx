@@ -19,6 +19,7 @@ function CardImage({ card, colour }: CardImageProps) {
                 src={`/img/backs/${colour}.svg`}
                 style={{
                     margin: 10,
+                    maxWidth: '33vw',
                 }}
             />
         )
@@ -30,6 +31,7 @@ function CardImage({ card, colour }: CardImageProps) {
             src={card.path}
             style={{
                 margin: 10,
+                maxWidth: '33vw',
             }}
         />
     )

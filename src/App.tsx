@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Grid } from '@mui/material';
 
 import CardImage, { PlayingCard } from './CardImage';
@@ -21,7 +21,7 @@ function App() {
     const [sameChance, setSameChance] = useState<number>(0);
     const [gameOver, setGameOver] = useState<boolean>(false);
 
-    const cardsToDisplay = Math.floor(window.innerWidth / 236) - 1;
+    const containerRef = useRef(null);
 
     // @ts-ignore
     const colourChange = (e: React.FormEvent<HTMLInputElement>, value: string) => {
@@ -37,9 +37,20 @@ function App() {
         cards[nextCardIndex].visible = true;
         setCards(cards);
 
+        if (containerRef.current) {
+            const containerDiv = containerRef.current as HTMLDivElement;
+            if (nextCardIndex + 1 < cards.length) {
+                containerDiv.children[nextCardIndex + 1].scrollIntoView();
+            }
+        }
+
         if ((guess === 'HIGHER' && nextCard.value >= latestCard.value) || (guess === 'LOWER' && nextCard.value <= latestCard.value)) {
             updateStats(cards);
             setScore(score + 1);
+
+            if (score === 51 && !gameOver) {
+                setGameOver(true);
+            }
         } else {
             setGameOver(true);
         }
@@ -59,35 +70,36 @@ function App() {
         setCards([]);
         setScore(0);
         setGameOver(false);
-    }
 
-    console.log(cards);
-
-    if (cards.length === 0) {
-        const deck: PlayingCard[] = [];
-        for (const suit of suits) {
-            for (const [value, run] of runs.entries()) {
-                deck.push({
-                    suit,
-                    run,
-                    value,
-                    path: `/img/${suit}/${run}.svg`,
-                    visible: false
-                });
+        if (cards.length === 0) {
+            const deck: PlayingCard[] = [];
+            for (const suit of suits) {
+                for (const [value, run] of runs.entries()) {
+                    deck.push({
+                        suit,
+                        run,
+                        value,
+                        path: `/img/${suit}/${run}.svg`,
+                        visible: false
+                    });
+                }
             }
+            const shuffled = deck
+                .map((value) => ({ value, sort: Math.random() }))
+                .sort((a, b) => a.sort - b.sort)
+                .map(({ value }) => value);
+            shuffled[0].visible = true;
+            setCards(shuffled);
+            updateStats(shuffled);
         }
-        const shuffled = deck
-            .map((value) => ({ value, sort: Math.random() }))
-            .sort((a, b) => a.sort - b.sort)
-            .map(({ value }) => value);
-        shuffled[0].visible = true;
-        setCards(shuffled);
-        updateStats(shuffled);
+
+        if (containerRef.current) {
+            const containerDiv = containerRef.current as HTMLDivElement;
+            containerDiv.scrollLeft = 0;
+        }
     }
 
-    if (score === 51 && !gameOver) {
-        setGameOver(true);
-    }
+    useEffect(newGame, []);
 
     return (
         <div
@@ -100,17 +112,20 @@ function App() {
             }}
         >
             <div
+                className="hide-scrollbar"
+                ref={containerRef}
                 style={{
                     alignItems: 'center',
                     display: 'flex',
                     flexDirection: 'row',
                     flexGrow: 1,
-                    overflow: 'hidden',
+                    overflowX: 'scroll',
+                    overflowY: 'hidden',
                     whiteSpace: 'nowrap',
                 }}
             >
                 {
-                    cards.filter(x => x.visible).splice(0 - cardsToDisplay, cardsToDisplay).concat(cards.filter(x => !x.visible)).map((card, i) => (
+                    cards.map((card, i) => (
                         <CardImage
                             card={card}
                             colour={colour}
