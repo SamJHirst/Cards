@@ -4,11 +4,10 @@ import {
 } from '@mui/material';
 
 interface InputPanelProps {
-    gameOver: boolean;
     makeGuess: (guess: 'HIGHER' | 'LOWER') => void;
 }
 
-function InputPanel({ gameOver, makeGuess }: InputPanelProps) {
+function InputPanel({ makeGuess }: InputPanelProps) {
     return (
         <>
             <Typography
@@ -29,7 +28,6 @@ function InputPanel({ gameOver, makeGuess }: InputPanelProps) {
                 }}
             >
                 <Button
-                    disabled={gameOver}
                     onClick={() => makeGuess('HIGHER')}
                     style={{
                         margin: '5px !important',
@@ -40,7 +38,6 @@ function InputPanel({ gameOver, makeGuess }: InputPanelProps) {
                     Higher
                 </Button>
                 <Button
-                    disabled={gameOver}
                     onClick={() => makeGuess('LOWER')}
                     style={{
                         margin: '5px !important',

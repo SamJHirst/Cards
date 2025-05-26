@@ -36,7 +36,7 @@ function App() {
         const nextCardIndex = cards.findIndex(x => x === nextCard);
         cards[nextCardIndex].visible = true;
         setCards(cards);
-        
+
         if ((guess === 'HIGHER' && nextCard.value >= latestCard.value) || (guess === 'LOWER' && nextCard.value <= latestCard.value)) {
             updateStats(cards);
             setScore(score + 1);
@@ -60,6 +60,8 @@ function App() {
         setScore(0);
         setGameOver(false);
     }
+
+    console.log(cards);
 
     if (cards.length === 0) {
         const deck: PlayingCard[] = [];
@@ -142,22 +144,13 @@ function App() {
                     >
                         <Panel
                             children={
-                                gameOver
-                                    ? (
-                                        <GameOverPanel
-                                            newGame={newGame}
-                                            score={score}
-                                        />
-                                    )
-                                    : (
-                                        <StatsPanel
-                                            deckSize={deckSize}
-                                            higherChance={higherChance}
-                                            lowerChance={lowerChance}
-                                            sameChance={sameChance}
-                                            score={score}
-                                        />
-                                    )
+                                <StatsPanel
+                                    deckSize={deckSize}
+                                    higherChance={higherChance}
+                                    lowerChance={lowerChance}
+                                    sameChance={sameChance}
+                                    score={score}
+                                />
                             }
                         />
                     </Grid>
@@ -169,10 +162,18 @@ function App() {
                     >
                         <Panel
                             children={
-                                <InputPanel
-                                    gameOver={gameOver}
-                                    makeGuess={makeGuess}
-                                />
+                                gameOver
+                                    ? (
+                                        <GameOverPanel
+                                            newGame={newGame}
+                                            score={score}
+                                        />
+                                    )
+                                    : (
+                                        <InputPanel
+                                            makeGuess={makeGuess}
+                                        />
+                                    )
                             }
                         />
                     </Grid>

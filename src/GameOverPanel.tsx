@@ -10,7 +10,14 @@ interface GameOverPanelProps {
 
 function GameOverPanel({ newGame, score }: GameOverPanelProps) {
     return (
-        <>
+        <div
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                height: '100%',
+            }}
+        >
             <Typography
                 align="center"
                 style={{
@@ -27,7 +34,6 @@ function GameOverPanel({ newGame, score }: GameOverPanelProps) {
             >
                 Score: {score}
             </Typography>
-            <br />
             <Button
                 onClick={newGame}
                 style={{
@@ -38,7 +44,7 @@ function GameOverPanel({ newGame, score }: GameOverPanelProps) {
             >
                 New Game
             </Button>
-        </>
+        </div>
     )
 }
 
