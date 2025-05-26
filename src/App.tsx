@@ -82,6 +82,9 @@ function App() {
                         path: `/img/${suit}/${run}.svg`,
                         visible: false
                     });
+
+                    // preload image
+                    new Image().src = `/img/${suit}/${run}.svg`;
                 }
             }
             const shuffled = deck
